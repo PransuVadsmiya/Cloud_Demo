@@ -1,0 +1,165 @@
+[2026-11-13 20:00:24,966] vm/INFO/locust.main: Starting Locust 2.47.0
+[2026-11-13 20:00:24,967] vm/INFO/locust.runners: Shape test starting.
+[2026-11-13 20:00:24,967] vm/INFO/locust.runners: Shape worker starting
+[2026-11-13 20:00:24,967] vm/INFO/locust.runners: Shape test updating to 40 users at 8.00 spawn rate
+[2026-11-13 20:00:24,968] vm/INFO/locust.runners: Ramping to 40 users at a rate of 8.00 per second
+[2026-11-13 20:00:28,978] vm/INFO/locust.runners: All users spawned: {"Shopper": 40} (40 total users)
+[2026-11-13 20:00:34,987] vm/INFO/locust.runners: Shape test updating to 40 users at 50.00 spawn rate
+[2026-11-13 20:00:34,987] vm/INFO/locust.runners: Ramping to 40 users at a rate of 50.00 per second
+[2026-11-13 20:00:34,987] vm/INFO/locust.runners: All users spawned: {"Shopper": 40} (40 total users)
+[2026-11-13 20:01:06,037] vm/INFO/locust.runners: Shape test updating to 48 users at 50.00 spawn rate
+[2026-11-13 20:01:06,038] vm/INFO/locust.runners: Ramping to 48 users at a rate of 50.00 per second
+[2026-11-13 20:01:06,038] vm/INFO/locust.runners: All users spawned: {"Shopper": 48} (48 total users)
+[2026-11-13 20:01:07,039] vm/INFO/locust.runners: Shape test updating to 56 users at 50.00 spawn rate
+[2026-11-13 20:01:07,040] vm/INFO/locust.runners: Ramping to 56 users at a rate of 50.00 per second
+[2026-11-13 20:01:07,041] vm/INFO/locust.runners: All users spawned: {"Shopper": 56} (56 total users)
+[2026-11-13 20:01:08,044] vm/INFO/locust.runners: Shape test updating to 64 users at 50.00 spawn rate
+[2026-11-13 20:01:08,045] vm/INFO/locust.runners: Ramping to 64 users at a rate of 50.00 per second
+[2026-11-13 20:01:08,045] vm/INFO/locust.runners: All users spawned: {"Shopper": 64} (64 total users)
+[2026-11-13 20:01:09,046] vm/INFO/locust.runners: Shape test updating to 72 users at 50.00 spawn rate
+[2026-11-13 20:01:09,046] vm/INFO/locust.runners: Ramping to 72 users at a rate of 50.00 per second
+[2026-11-13 20:01:09,046] vm/INFO/locust.runners: All users spawned: {"Shopper": 72} (72 total users)
+[2026-11-13 20:01:10,048] vm/INFO/locust.runners: Shape test updating to 80 users at 50.00 spawn rate
+[2026-11-13 20:01:10,049] vm/INFO/locust.runners: Ramping to 80 users at a rate of 50.00 per second
+[2026-11-13 20:01:10,050] vm/INFO/locust.runners: All users spawned: {"Shopper": 80} (80 total users)
+[2026-11-13 20:01:11,052] vm/INFO/locust.runners: Shape test updating to 88 users at 50.00 spawn rate
+[2026-11-13 20:01:11,053] vm/INFO/locust.runners: Ramping to 88 users at a rate of 50.00 per second
+[2026-11-13 20:01:11,053] vm/INFO/locust.runners: All users spawned: {"Shopper": 88} (88 total users)
+[2026-11-13 20:01:12,056] vm/INFO/locust.runners: Shape test updating to 96 users at 50.00 spawn rate
+[2026-11-13 20:01:12,059] vm/INFO/locust.runners: Ramping to 96 users at a rate of 50.00 per second
+[2026-11-13 20:01:12,060] vm/INFO/locust.runners: All users spawned: {"Shopper": 96} (96 total users)
+[2026-11-13 20:01:13,059] vm/INFO/locust.runners: Shape test updating to 104 users at 50.00 spawn rate
+[2026-11-13 20:01:13,059] vm/INFO/locust.runners: Ramping to 104 users at a rate of 50.00 per second
+[2026-11-13 20:01:13,060] vm/INFO/locust.runners: All users spawned: {"Shopper": 104} (104 total users)
+[2026-11-13 20:01:14,061] vm/INFO/locust.runners: Shape test updating to 112 users at 50.00 spawn rate
+[2026-11-13 20:01:14,061] vm/INFO/locust.runners: Ramping to 112 users at a rate of 50.00 per second
+[2026-11-13 20:01:14,062] vm/INFO/locust.runners: All users spawned: {"Shopper": 112} (112 total users)
+[2026-11-13 20:01:15,065] vm/INFO/locust.runners: Shape test updating to 120 users at 50.00 spawn rate
+[2026-11-13 20:01:15,067] vm/INFO/locust.runners: Ramping to 120 users at a rate of 50.00 per second
+[2026-11-13 20:01:15,068] vm/INFO/locust.runners: All users spawned: {"Shopper": 120} (120 total users)
+[2026-11-13 20:01:16,067] vm/INFO/locust.runners: Shape test updating to 128 users at 50.00 spawn rate
+[2026-11-13 20:01:16,067] vm/INFO/locust.runners: Ramping to 128 users at a rate of 50.00 per second
+[2026-11-13 20:01:16,068] vm/INFO/locust.runners: All users spawned: {"Shopper": 128} (128 total users)
+[2026-11-13 20:01:17,069] vm/INFO/locust.runners: Shape test updating to 136 users at 50.00 spawn rate
+[2026-11-13 20:01:17,069] vm/INFO/locust.runners: Ramping to 136 users at a rate of 50.00 per second
+[2026-11-13 20:01:17,069] vm/INFO/locust.runners: All users spawned: {"Shopper": 136} (136 total users)
+[2026-11-13 20:01:18,072] vm/INFO/locust.runners: Shape test updating to 144 users at 50.00 spawn rate
+[2026-11-13 20:01:18,072] vm/INFO/locust.runners: Ramping to 144 users at a rate of 50.00 per second
+[2026-11-13 20:01:18,072] vm/INFO/locust.runners: All users spawned: {"Shopper": 144} (144 total users)
+[2026-11-13 20:01:19,075] vm/INFO/locust.runners: Shape test updating to 152 users at 50.00 spawn rate
+[2026-11-13 20:01:19,075] vm/INFO/locust.runners: Ramping to 152 users at a rate of 50.00 per second
+[2026-11-13 20:01:19,076] vm/INFO/locust.runners: All users spawned: {"Shopper": 152} (152 total users)
+[2026-11-13 20:01:20,077] vm/INFO/locust.runners: Shape test updating to 160 users at 50.00 spawn rate
+[2026-11-13 20:01:20,078] vm/INFO/locust.runners: Ramping to 160 users at a rate of 50.00 per second
+[2026-11-13 20:01:20,078] vm/INFO/locust.runners: All users spawned: {"Shopper": 160} (160 total users)
+[2026-11-13 20:01:21,080] vm/INFO/locust.runners: Shape test updating to 168 users at 50.00 spawn rate
+[2026-11-13 20:01:21,080] vm/INFO/locust.runners: Ramping to 168 users at a rate of 50.00 per second
+[2026-11-13 20:01:21,081] vm/INFO/locust.runners: All users spawned: {"Shopper": 168} (168 total users)
+[2026-11-13 20:01:22,083] vm/INFO/locust.runners: Shape test updating to 176 users at 50.00 spawn rate
+[2026-11-13 20:01:22,083] vm/INFO/locust.runners: Ramping to 176 users at a rate of 50.00 per second
+[2026-11-13 20:01:22,085] vm/INFO/locust.runners: All users spawned: {"Shopper": 176} (176 total users)
+[2026-11-13 20:01:23,085] vm/INFO/locust.runners: Shape test updating to 184 users at 50.00 spawn rate
+[2026-11-13 20:01:23,085] vm/INFO/locust.runners: Ramping to 184 users at a rate of 50.00 per second
+[2026-11-13 20:01:23,086] vm/INFO/locust.runners: All users spawned: {"Shopper": 184} (184 total users)
+[2026-11-13 20:01:24,088] vm/INFO/locust.runners: Shape test updating to 192 users at 50.00 spawn rate
+[2026-11-13 20:01:24,090] vm/INFO/locust.runners: Ramping to 192 users at a rate of 50.00 per second
+[2026-11-13 20:01:24,090] vm/INFO/locust.runners: All users spawned: {"Shopper": 192} (192 total users)
+[2026-11-13 20:01:25,091] vm/INFO/locust.runners: Shape test updating to 200 users at 50.00 spawn rate
+[2026-11-13 20:01:25,091] vm/INFO/locust.runners: Ramping to 200 users at a rate of 50.00 per second
+[2026-11-13 20:01:25,092] vm/INFO/locust.runners: All users spawned: {"Shopper": 200} (200 total users)
+[2026-11-13 20:02:05,197] vm/INFO/locust.runners: Shape test updating to 198 users at 50.00 spawn rate
+[2026-11-13 20:02:05,197] vm/INFO/locust.runners: Ramping to 198 users at a rate of 50.00 per second
+[2026-11-13 20:02:05,202] vm/INFO/locust.runners: All users spawned: {"Shopper": 198} (198 total users)
+[2026-11-13 20:02:06,199] vm/INFO/locust.runners: Shape test updating to 190 users at 50.00 spawn rate
+[2026-11-13 20:02:06,199] vm/INFO/locust.runners: Ramping to 190 users at a rate of 50.00 per second
+[2026-11-13 20:02:06,200] vm/INFO/locust.runners: All users spawned: {"Shopper": 190} (190 total users)
+[2026-11-13 20:02:07,201] vm/INFO/locust.runners: Shape test updating to 182 users at 50.00 spawn rate
+[2026-11-13 20:02:07,201] vm/INFO/locust.runners: Ramping to 182 users at a rate of 50.00 per second
+[2026-11-13 20:02:07,202] vm/INFO/locust.runners: All users spawned: {"Shopper": 182} (182 total users)
+[2026-11-13 20:02:08,203] vm/INFO/locust.runners: Shape test updating to 174 users at 50.00 spawn rate
+[2026-11-13 20:02:08,203] vm/INFO/locust.runners: Ramping to 174 users at a rate of 50.00 per second
+[2026-11-13 20:02:08,205] vm/INFO/locust.runners: All users spawned: {"Shopper": 174} (174 total users)
+[2026-11-13 20:02:09,206] vm/INFO/locust.runners: Shape test updating to 166 users at 50.00 spawn rate
+[2026-11-13 20:02:09,206] vm/INFO/locust.runners: Ramping to 166 users at a rate of 50.00 per second
+[2026-11-13 20:02:09,208] vm/INFO/locust.runners: All users spawned: {"Shopper": 166} (166 total users)
+[2026-11-13 20:02:10,209] vm/INFO/locust.runners: Shape test updating to 158 users at 50.00 spawn rate
+[2026-11-13 20:02:10,209] vm/INFO/locust.runners: Ramping to 158 users at a rate of 50.00 per second
+[2026-11-13 20:02:10,210] vm/INFO/locust.runners: All users spawned: {"Shopper": 158} (158 total users)
+[2026-11-13 20:02:11,211] vm/INFO/locust.runners: Shape test updating to 150 users at 50.00 spawn rate
+[2026-11-13 20:02:11,211] vm/INFO/locust.runners: Ramping to 150 users at a rate of 50.00 per second
+[2026-11-13 20:02:11,213] vm/INFO/locust.runners: All users spawned: {"Shopper": 150} (150 total users)
+[2026-11-13 20:02:12,214] vm/INFO/locust.runners: Shape test updating to 142 users at 50.00 spawn rate
+[2026-11-13 20:02:12,214] vm/INFO/locust.runners: Ramping to 142 users at a rate of 50.00 per second
+[2026-11-13 20:02:12,216] vm/INFO/locust.runners: All users spawned: {"Shopper": 142} (142 total users)
+[2026-11-13 20:02:13,217] vm/INFO/locust.runners: Shape test updating to 134 users at 50.00 spawn rate
+[2026-11-13 20:02:13,217] vm/INFO/locust.runners: Ramping to 134 users at a rate of 50.00 per second
+[2026-11-13 20:02:13,218] vm/INFO/locust.runners: All users spawned: {"Shopper": 134} (134 total users)
+[2026-11-13 20:02:14,220] vm/INFO/locust.runners: Shape test updating to 125 users at 50.00 spawn rate
+[2026-11-13 20:02:14,220] vm/INFO/locust.runners: Ramping to 125 users at a rate of 50.00 per second
+[2026-11-13 20:02:14,222] vm/INFO/locust.runners: All users spawned: {"Shopper": 125} (125 total users)
+[2026-11-13 20:02:15,223] vm/INFO/locust.runners: Shape test updating to 117 users at 50.00 spawn rate
+[2026-11-13 20:02:15,223] vm/INFO/locust.runners: Ramping to 117 users at a rate of 50.00 per second
+[2026-11-13 20:02:15,225] vm/INFO/locust.runners: All users spawned: {"Shopper": 117} (117 total users)
+[2026-11-13 20:02:16,225] vm/INFO/locust.runners: Shape test updating to 109 users at 50.00 spawn rate
+[2026-11-13 20:02:16,225] vm/INFO/locust.runners: Ramping to 109 users at a rate of 50.00 per second
+[2026-11-13 20:02:16,227] vm/INFO/locust.runners: All users spawned: {"Shopper": 109} (109 total users)
+[2026-11-13 20:02:17,227] vm/INFO/locust.runners: Shape test updating to 101 users at 50.00 spawn rate
+[2026-11-13 20:02:17,227] vm/INFO/locust.runners: Ramping to 101 users at a rate of 50.00 per second
+[2026-11-13 20:02:17,229] vm/INFO/locust.runners: All users spawned: {"Shopper": 101} (101 total users)
+[2026-11-13 20:02:18,231] vm/INFO/locust.runners: Shape test updating to 93 users at 50.00 spawn rate
+[2026-11-13 20:02:18,231] vm/INFO/locust.runners: Ramping to 93 users at a rate of 50.00 per second
+[2026-11-13 20:02:18,232] vm/INFO/locust.runners: All users spawned: {"Shopper": 93} (93 total users)
+[2026-11-13 20:02:19,233] vm/INFO/locust.runners: Shape test updating to 85 users at 50.00 spawn rate
+[2026-11-13 20:02:19,234] vm/INFO/locust.runners: Ramping to 85 users at a rate of 50.00 per second
+[2026-11-13 20:02:19,235] vm/INFO/locust.runners: All users spawned: {"Shopper": 85} (85 total users)
+[2026-11-13 20:02:20,236] vm/INFO/locust.runners: Shape test updating to 77 users at 50.00 spawn rate
+[2026-11-13 20:02:20,237] vm/INFO/locust.runners: Ramping to 77 users at a rate of 50.00 per second
+[2026-11-13 20:02:20,238] vm/INFO/locust.runners: All users spawned: {"Shopper": 77} (77 total users)
+[2026-11-13 20:02:21,239] vm/INFO/locust.runners: Shape test updating to 69 users at 50.00 spawn rate
+[2026-11-13 20:02:21,239] vm/INFO/locust.runners: Ramping to 69 users at a rate of 50.00 per second
+[2026-11-13 20:02:21,240] vm/INFO/locust.runners: All users spawned: {"Shopper": 69} (69 total users)
+[2026-11-13 20:02:22,241] vm/INFO/locust.runners: Shape test updating to 61 users at 50.00 spawn rate
+[2026-11-13 20:02:22,241] vm/INFO/locust.runners: Ramping to 61 users at a rate of 50.00 per second
+[2026-11-13 20:02:22,242] vm/INFO/locust.runners: All users spawned: {"Shopper": 61} (61 total users)
+[2026-11-13 20:02:23,245] vm/INFO/locust.runners: Shape test updating to 53 users at 50.00 spawn rate
+[2026-11-13 20:02:23,245] vm/INFO/locust.runners: Ramping to 53 users at a rate of 50.00 per second
+[2026-11-13 20:02:23,247] vm/INFO/locust.runners: All users spawned: {"Shopper": 53} (53 total users)
+[2026-11-13 20:02:24,249] vm/INFO/locust.runners: Shape test updating to 45 users at 50.00 spawn rate
+[2026-11-13 20:02:24,249] vm/INFO/locust.runners: Ramping to 45 users at a rate of 50.00 per second
+[2026-11-13 20:02:24,250] vm/INFO/locust.runners: All users spawned: {"Shopper": 45} (45 total users)
+[2026-11-13 20:02:25,251] vm/INFO/locust.runners: Shape test updating to 40 users at 50.00 spawn rate
+[2026-11-13 20:02:25,251] vm/INFO/locust.runners: Ramping to 40 users at a rate of 50.00 per second
+[2026-11-13 20:02:25,252] vm/INFO/locust.runners: All users spawned: {"Shopper": 40} (40 total users)
+[2026-11-13 20:03:25,405] vm/INFO/locust.runners: Shape test stopping
+[2026-11-13 20:03:25,418] vm/INFO/locust.main: Shape test completed, shutting down
+[2026-11-13 20:03:25,418] vm/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     /api/cart                                                                       1433  176(12.28%) |    686       0    3491    420 |    7.94        0.98
+POST     /api/checkout                                                                    643   88(13.69%) |    662       0    3183    320 |    3.56        0.49
+GET      /api/products                                                                   8151 1054(12.93%) |    688       0    3636    400 |   45.18        5.84
+GET      /api/search                                                                     3415  480(14.06%) |    874       0    3603    520 |   18.93        2.66
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                     13642 1798(13.18%) |    733       0    3636    450 |   75.61        9.97
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+POST     /api/cart                                                                             420   1000   1300   1400   1700   2100   2400   2700   3300   3500   3500   1433
+POST     /api/checkout                                                                         320    980   1300   1400   1700   2000   2300   2500   3200   3200   3200    643
+GET      /api/products                                                                         400   1000   1200   1400   1700   2200   2600   2800   3400   3600   3600   8151
+GET      /api/search                                                                           520   1300   1500   1600   2000   2400   2800   3000   3500   3600   3600   3415
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                            450   1100   1300   1400   1800   2200   2600   2900   3400   3600   3600  13642
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+1041               GET /api/products: LocustBadStatusCode(code=503)                                                    
+176                POST /api/cart: LocustBadStatusCode(code=503)                                                       
+473                GET /api/search: LocustBadStatusCode(code=503)                                                      
+88                 POST /api/checkout: LocustBadStatusCode(code=503)                                                   
+7                  GET /api/search: LocustBadStatusCode(code=502)                                                      
+13                 GET /api/products: LocustBadStatusCode(code=502)                                                    
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

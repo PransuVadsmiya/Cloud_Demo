@@ -1,0 +1,19 @@
+{
+  "run": "prewarm",
+  "requests": 16830,
+  "failure_rate_pct": 0.172,
+  "overall_p50_ms": 61.0,
+  "overall_p95_ms": 480.0,
+  "overall_p99_ms": 670.0,
+  "peak_p50_ms": 175.0,
+  "peak_p95_ms": 485.0,
+  "peak_p95_worst_ms": 670.0,
+  "peak_rps": 204.9,
+  "max_instances": 20,
+  "avg_instances": 11.1,
+  "instance_seconds": 2132,
+  "cost_usd": 0.012318,
+  "orders_processed": 844,
+  "orders_left_in_queue": 0,
+  "order_p95_s": 0.024
+}

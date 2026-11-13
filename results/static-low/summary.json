@@ -1,0 +1,19 @@
+{
+  "run": "static-low",
+  "requests": 13642,
+  "failure_rate_pct": 13.18,
+  "overall_p50_ms": 450.0,
+  "overall_p95_ms": 2200.0,
+  "overall_p99_ms": 2900.0,
+  "peak_p50_ms": 1200.0,
+  "peak_p95_ms": 1900.0,
+  "peak_p95_worst_ms": 3200.0,
+  "peak_rps": 163.2,
+  "max_instances": 4,
+  "avg_instances": 4.0,
+  "instance_seconds": 768,
+  "cost_usd": 0.004437,
+  "orders_processed": 558,
+  "orders_left_in_queue": 0,
+  "order_p95_s": 0.0161
+}
