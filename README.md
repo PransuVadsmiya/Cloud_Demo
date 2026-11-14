@@ -118,6 +118,7 @@ is what an HPA on custom metrics (Prometheus adapter) or KEDA does.
 |---|---|---|---|---|
 | static-low (4) | 13.2 | 1900 / 3200 | 4.0 | 0.0042 |
 | static-peak (12) | 0.12 | 560 / 750 | 12.0 | 0.0127 |
+| static-8 (right-sized, ~30 req/s per instance) | 0.14 | 580 / 1300 | 8.0 | 0.0084 |
 | reactive | 0.28 | 330 / 1200 | 9.8 | 0.0103 |
 | prewarm | 0.17 | 485 / 670 | 11.7 | 0.0124 |
 
@@ -183,3 +184,10 @@ The cross-check: at 40 req/s on 2 instances (first attempt) CPU read about 49%, 
 * **peak p95 median / worst**: Locust's 10-second sliding-window p95, sampled every second inside the peak window; median and maximum of those samples.
 * **avg instances / cost**: billed instances (launched, including booting) integrated over the time the load test ran, times the assumed hourly price.
 * **Failed %**: HTTP 5xx from load shedding (503) and from instances being added/removed (502), over all requests.
+
+## Review notes (14 Nov)
+
+* A fleet sized to the measured capacity (static-8) was added. On this 3-minute profile it is cheaper than reactive autoscaling (0.0084 vs 0.0103) with similar latency, so the cost saving of autoscaling is only against an over-sized fixed fleet. Autoscaling's advantage is that it needs no foreknowledge of the peak and drops to a low floor in quiet periods.
+* Each scenario was run once.
+* AWS run 1: the planned profile sends about 84,480 requests; Locust sent 79,984. The shortfall (about 4,500) matches the two-minute dip to about 40 req/s while one instance was serving: Locust users wait for responses, so slow responses reduce offered load.
+* AWS run 2 uses `suspend_az_rebalance = true` (default now). Run it with `--name aws-run2` so run 1 is not overwritten; `terraform apply -var min_size=3` gives a pre-warmed variant.

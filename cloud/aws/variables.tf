@@ -22,3 +22,8 @@ variable "cpu_target" {
   type    = number
   default = 50 # faculty rule: scale out when average CPU goes above 50%
 }
+
+variable "suspend_az_rebalance" {
+  type    = bool
+  default = true # false reproduces the first run, where AZ rebalancing terminated a serving instance at peak
+}

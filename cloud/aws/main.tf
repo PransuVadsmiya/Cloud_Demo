@@ -141,6 +141,8 @@ resource "aws_autoscaling_group" "asg" {
   health_check_type         = "ELB"
   health_check_grace_period = 180
   default_instance_warmup   = 120
+  # The first AWS run lost a serving instance to availability-zone rebalancing at peak. true = suspend that process.
+  suspended_processes       = var.suspend_az_rebalance ? ["AZRebalance"] : []
   metrics_granularity       = "1Minute"
   enabled_metrics = [
     "GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances",

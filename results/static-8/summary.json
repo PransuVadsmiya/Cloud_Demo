@@ -1,0 +1,26 @@
+{
+  "run": "static-8",
+  "requests": 16730,
+  "failure_rate_pct": 0.143,
+  "overall_p50_ms": 110.0,
+  "overall_p95_ms": 740.0,
+  "overall_p99_ms": 1200.0,
+  "peak_p50_ms": 180.0,
+  "peak_p95_ms": 580.0,
+  "peak_p95_worst_ms": 1300.0,
+  "peak_rps": 214.6,
+  "max_instances": 8,
+  "avg_instances": 8.0,
+  "instance_seconds": 1456,
+  "cost_usd": 0.008412,
+  "orders_processed": 875,
+  "orders_left_in_queue": 0,
+  "order_p95_s": 0.0173,
+  "peak_by_instances": {
+    "8": {
+      "seconds": 45,
+      "p50_ms": 220.0,
+      "p95_ms": 590.0
+    }
+  }
+}

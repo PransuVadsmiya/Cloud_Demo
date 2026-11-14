@@ -1,0 +1,4 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/api/products,LocustBadStatusCode(code=502),14,2026-11-14T09:48:56Z,2026-11-14T09:50:10Z
+GET,/api/search,LocustBadStatusCode(code=502),6,2026-11-14T09:48:56Z,2026-11-14T09:49:38Z
+POST,/api/cart,LocustBadStatusCode(code=502),4,2026-11-14T09:48:58Z,2026-11-14T09:48:58Z
