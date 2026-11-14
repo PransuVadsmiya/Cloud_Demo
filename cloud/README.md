@@ -7,12 +7,14 @@ Faculty steps mapped to this repo:
 | 1. Basic web API returning a status | `app/main.py`, `GET /status` returns `{"status": "Big Billion Days deal available", ...}` |
 | 2. Containerize / VM | Docker container started on each EC2 instance by `cloud/aws/user_data.sh.tftpl` |
 | 3. Load balancer | Application Load Balancer (`aws_lb`), health check on `/health` |
-| 4. Auto Scaling Group, scale out above 50% CPU | `aws_autoscaling_group` + target-tracking policy on average CPU = 50% (min 2, max 12) |
-| 5. Load test | Locust, 5x spike (40 to 200 req/s, about 120k requests), `cloud/run_aws_test.py` |
+| 4. Auto Scaling Group, scale out above 50% CPU | `aws_autoscaling_group` + target-tracking policy on average CPU = 50% (min 1, max 4) |
+| 5. Load test | Locust, 5x spike (16 to 80 req/s, about 50k requests), `cloud/run_aws_test.py` |
 | 6. Evidence | CloudWatch dashboard `bbd-scaling`, ASG activity log, `results/aws/` plots |
 
 In AWS mode the app runs with `WORK_MODE=cpu`: each request burns real CPU (about 46 ms for the shopper mix), so CPU
-utilisation tracks load and the 50% rule fires. One t3.small (2 vCPU) saturates near 43 req/s, so 200 req/s needs about 9 instances.
+utilisation tracks load and the 50% rule fires. One t3.small (2 vCPU) saturates near 43 req/s (about 22 req/s at the 50% target), so 80 req/s needs about 4 instances.
+The max of 4 comes from the account's default limit of 8 vCPUs (4 x 2 vCPU); a first run at 200 req/s asked for 8 instances and AWS refused the extra four with
+"vCPU limit of 8". That is worth a sentence in the report (service quotas are a real constraint on scale-out).
 Instances keep their cache and stock in memory (`REDIS_URL=memory`); a shared cache (ElastiCache) would be the next step
 and is discussed in the report, not built.
 
@@ -53,7 +55,7 @@ Leave the AWS console open while it runs and take the screenshots below. When it
 All times are within the 40-minute run. Include the browser URL bar and the time/clock where possible.
 
 1. **Live URL**: browser on `http://<alb_dns>/status` showing the JSON (before the test, and once during).
-2. **ASG overview**: EC2 > Auto Scaling groups > `bbd-asg`: before the test (desired 2) and at peak (desired about 8 to 12).
+2. **ASG overview**: EC2 > Auto Scaling groups > `bbd-asg`: before the test (desired 1) and at peak (desired 3 to 4).
 3. **ASG "Activity" tab**: shows "Launching a new EC2 instance" entries with the cause "TargetTracking ... AlarmHigh". Take it at peak and again after scale-in ("Terminating EC2 instance").
 4. **ASG "Instance management" tab** at peak: list of InService instances.
 5. **ASG "Monitoring" tab** or the **CloudWatch dashboard `bbd-scaling`** after the run: instances, CPU against the 50% line, ALB response time, requests per minute. The dashboard is the AWS-native version of "response time vs instance count".

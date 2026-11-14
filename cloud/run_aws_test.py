@@ -2,7 +2,7 @@
 
   python cloud/run_aws_test.py --url http://<alb-dns> --asg bbd-asg
 
-Profile (defaults, ~38 min): 3 min normal (40 req/s), 3 min ramp to 5x (200 req/s), 10 min hold,
+Profile (defaults, ~38 min): 3 min normal (16 req/s), 3 min ramp to 5x (80 req/s), 10 min hold,
 2 min ramp down, 20 min tail. Cloud scaling is slow (1-min metrics, ~2-3 min to alarm, ~2 min to boot,
 scale-in waits ~15 min), so the profile is much longer than the local one.
 """
@@ -22,7 +22,7 @@ def main():
     ap.add_argument("--asg", default="bbd-asg")
     ap.add_argument("--region", default="ap-south-1")
     ap.add_argument("--name", default="aws")
-    ap.add_argument("--base-rps", type=int, default=40)
+    ap.add_argument("--base-rps", type=int, default=16)
     ap.add_argument("--mult", type=float, default=5)
     ap.add_argument("--warm", type=int, default=180)
     ap.add_argument("--ramp", type=int, default=180)

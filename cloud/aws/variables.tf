@@ -10,12 +10,12 @@ variable "instance_type" {
 
 variable "min_size" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "max_size" {
   type    = number
-  default = 12
+  default = 4 # new AWS accounts often have an 8 vCPU limit; a t3.small has 2 vCPU, so 4 is the cap
 }
 
 variable "cpu_target" {
