@@ -8,7 +8,7 @@
 | S3 | Autoscaler: static / reactive / pre-warm, cost accounting | `autoscaler/` | done |
 | S4 | BBD-shaped load test (Locust primary, k6 alternative) | `loadtest/` | Locust tested; k6 untested |
 | S5 | Experiment runner, plots, comparison | `experiments/` | done |
-| S6 (optional) | Kubernetes manifests with HPA, to mirror Flipkart's K8s platform [4] | `k8s/` | not started |
+| S6 | Kubernetes manifests + K8s autoscaler backend, to mirror Flipkart's K8s platform [4] | `k8s/`, `autoscaler/` | written; plumbing tested with a fake kubectl, not yet on a real cluster |
 | S7 | Report add-ons: results, figures, discussion, viva notes | report | to do |
 
 ## Scenarios and the question each answers

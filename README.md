@@ -17,7 +17,7 @@ plot response time against instance count.
 | Caching layer [4] | Redis cache-aside on `/api/products` |
 | Fallbacks / graceful degradation [1] | load shedding with 503 + Retry-After ("waiting room"), queue backpressure |
 | 2014 stock-outs / correctness [5] | atomic Redis `DECRBY` stock, no overselling under concurrency |
-| Shared platform, minutes-not-days deploys [4] | Docker Compose, replicas change in seconds |
+| Shared Kubernetes platform, minutes-not-days deploys [4] | `k8s/` manifests: Deployments, Service (kube-proxy load balancing), readiness probes |
 | Cost efficiency of autoscaling [3][4] | instance-seconds x price per run, compared against static provisioning |
 
 Only discussed, not replicated: own data centres, the hybrid migration, Aerospike-scale infrastructure.
@@ -27,6 +27,7 @@ Only discussed, not replicated: own data centres, the hybrid migration, Aerospik
 ```
 app/            FastAPI storefront (main.py) + order worker (worker.py)
 lb/             nginx.conf (Docker) and lb.py (dev-mode software LB)
+k8s/            Kubernetes manifests (kind) - Deployments, Service/LB, readiness probes
 autoscaler/     control loop, process and docker backends, cost accounting
 loadtest/       locustfile.py (primary), k6_spike.js (alternative)
 experiments/    run_experiment.py, run_all.sh, analyze.py
@@ -65,6 +66,31 @@ python experiments/run_docker.py --name docker-reactive --mode reactive   # auto
 
 Docker mode was first run on Windows with Docker Desktop (the stack came up and the autoscaler scaled 2 to 20 containers);
 it was not testable in the sandbox where the code was written.
+
+### Kubernetes mode (kind)
+
+Flipkart runs its platform on Kubernetes [4]; this mode puts the same app on a cluster. The Service
+`app` is the load balancer (kube-proxy spreads connections over pods that pass the readiness probe, so booting
+pods receive no traffic, which removes the 502s seen with nginx in Docker mode). The autoscaler runs the same
+target-tracking logic and scales the `app` Deployment with `kubectl scale`.
+
+```
+winget install Kubernetes.kind        (or: choco install kind; kubectl comes with Docker Desktop)
+docker build -t bbd-app:latest .
+kind create cluster --name bbd --config k8s/kind/config.yaml
+kind load docker-image bbd-app:latest --name bbd
+kubectl apply -f k8s/
+kubectl -n bbd get pods               # wait until app/worker/redis pods are Running and READY
+curl "localhost:8080/api/products?page=1"
+python experiments/run_docker.py --backend k8s --name k8s-reactive --mode reactive
+kind delete cluster --name bbd
+```
+
+With Docker Desktop's built-in Kubernetes instead of kind, skip the kind steps and pass `--host http://localhost:30080`.
+Why not the built-in HorizontalPodAutoscaler? It scales on CPU by default, and this app's capacity is slot-based
+(simulated work), so CPU does not track load. Our autoscaler applies the same rule as the HPA,
+`desired = ceil(current * metric / target)`, to an application metric (utilisation and queue depth). In production this
+is what an HPA on custom metrics (Prometheus adapter) or KEDA does.
 
 ## Outputs for the report
 

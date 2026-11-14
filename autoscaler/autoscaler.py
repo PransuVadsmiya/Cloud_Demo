@@ -9,6 +9,7 @@ Modes
 Backends
   process   spawns uvicorn processes locally (what the sandbox / quick runs use)
   docker    `docker compose up --scale app=N` (needs the compose stack running)
+  k8s       `kubectl scale deploy/app` (needs the k8s/ manifests applied; Service = load balancer)
 
 Every second a row is appended to the timeline CSV (instances, load, queue depth, cost).
 Cost = billed instance-seconds * price. Billing starts at launch, so boot time is paid for.
@@ -78,6 +79,25 @@ class DockerBackend:
         pass
 
 
+class K8sBackend:
+    """Scales the `app` Deployment. Kubernetes handles placement, readiness and graceful termination."""
+
+    def __init__(self, namespace, deployment="app"):
+        self.ns, self.dep = namespace, deployment
+
+    def count(self):
+        out = subprocess.run(["kubectl", "-n", self.ns, "get", "deploy", self.dep, "-o",
+                              "jsonpath={.status.replicas}"], capture_output=True, text=True).stdout.strip()
+        return int(out) if out.isdigit() else 0     # status.replicas = pods created (billed), ready or not
+
+    def scale_to(self, n):
+        subprocess.run(["kubectl", "-n", self.ns, "scale", f"deploy/{self.dep}", f"--replicas={n}"],
+                       check=True, capture_output=True)
+
+    def close(self):
+        pass
+
+
 def read_fleet(r):
     insts = []
     for k in r.scan_iter("inst:*"):
@@ -89,7 +109,7 @@ def read_fleet(r):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--backend", choices=["process", "docker"], default="process")
+    ap.add_argument("--backend", choices=["process", "docker", "k8s"], default="process")
     ap.add_argument("--mode", choices=["static", "reactive", "prewarm"], default="reactive")
     ap.add_argument("--redis", default="redis://localhost:6379/0")
     ap.add_argument("--initial", type=int, default=4, help="instances at t=0 (static: the fixed size)")
@@ -103,6 +123,7 @@ def main():
     ap.add_argument("--duration", type=int, default=0, help="stop after N seconds (0 = until SIGTERM)")
     ap.add_argument("--timeline", default="results/timeline.csv")
     ap.add_argument("--base-port", type=int, default=9000)
+    ap.add_argument("--k8s-namespace", default="bbd")
     ap.add_argument("--compose-file", default=os.path.join(ROOT, "docker-compose.yml"))
     ap.add_argument("--start-delay", type=float, default=3.0, help="simulated boot time (process backend)")
     ap.add_argument("--concurrency", type=int, default=2)
@@ -113,6 +134,8 @@ def main():
     if a.backend == "process":
         be = ProcessBackend(a.base_port, {"REDIS_URL": a.redis, "START_DELAY_S": str(a.start_delay),
                                           "CONCURRENCY": str(a.concurrency), "SERVICE_MS": str(a.service_ms)})
+    elif a.backend == "k8s":
+        be = K8sBackend(a.k8s_namespace)
     else:
         be = DockerBackend(a.compose_file)
 
