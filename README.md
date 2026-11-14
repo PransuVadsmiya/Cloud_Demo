@@ -96,3 +96,23 @@ The cost gap would be far larger on a real day, because a 2-minute run spends a 
 Locust history percentiles are a 10 s sliding window. A mixed workload with only 2 slots per instance shows
 head-of-line blocking (cheap requests queue behind 250 ms searches), which is why p50 is high at base load.
 Reactive and prewarm both hit the 20-instance cap during the ramp: the step policy overshoots while instances boot.
+
+## Steady-state sweep: response time vs instance count
+
+`python experiments/sweep.py --rps 150 --sizes 4 5 6 8 10 12 16` runs a fixed fleet under constant load (70 s per size,
+first 30 s ignored) and writes `results/sweep.csv` and `results/sweep_latency_vs_instances.png`.
+Unlike the spike run, load and fleet size are both constant, so each point is a steady state.
+
+| Instances | Served req/s (offered 150) | p50 ms | p95 ms | p99 ms |
+|---|---|---|---|---|
+| 4 | 112.6 | 1200 | 1800 | 2100 |
+| 5 | 137.8 | 750 | 1300 | 1500 |
+| 6 | 146.0 | 170 | 730 | 1000 |
+| 8 | 149.5 | 260 | 730 | 900 |
+| 10 | 149.8 | 250 | 580 | 790 |
+| 12 | 149.8 | 220 | 520 | 730 |
+| 16 | 150.0 | 47 | 460 | 530 |
+
+Capacity (~30 req/s per instance for this mix) puts the knee at 5-6 instances: below it the fleet cannot serve the
+offered load (4 instances serve only 113 of 150 req/s) and latency explodes; above it, extra instances mainly cut
+queueing delay and head-of-line blocking, with diminishing returns. The p50 dip at 6 vs 8 is run-to-run noise.

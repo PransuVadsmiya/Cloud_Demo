@@ -47,6 +47,7 @@ def main():
     ap.add_argument("--redis-port", type=int, default=6390)
     ap.add_argument("--lb-port", type=int, default=8080)
     ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--skip-analyze", action="store_true")
     a = ap.parse_args()
 
     out = os.path.join(ROOT, "results", a.name)
@@ -118,6 +119,8 @@ def main():
         # reap stray app instances if the autoscaler was killed before cleanup
         subprocess.run(["pkill", "-f", "uvicorn app.main:app"], check=False)
 
+    if a.skip_analyze:
+        return
     subprocess.run([PY, "experiments/analyze.py", "--run", a.name, "--peak-start", str(a.warm + a.ramp),
                     "--peak-end", str(a.warm + a.ramp + a.hold)], cwd=ROOT, check=True)
 
