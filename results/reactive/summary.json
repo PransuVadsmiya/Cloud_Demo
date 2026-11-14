@@ -15,5 +15,37 @@
   "cost_usd": 0.010308,
   "orders_processed": 873,
   "orders_left_in_queue": 0,
-  "order_p95_s": 0.0196
+  "order_p95_s": 0.0196,
+  "peak_by_instances": {
+    "5": {
+      "seconds": 1,
+      "p50_ms": 510.0,
+      "p95_ms": 1100.0
+    },
+    "10": {
+      "seconds": 5,
+      "p50_ms": 410.0,
+      "p95_ms": 1100.0
+    },
+    "13": {
+      "seconds": 12,
+      "p50_ms": 22.0,
+      "p95_ms": 300.0
+    },
+    "14": {
+      "seconds": 13,
+      "p50_ms": 31.0,
+      "p95_ms": 380.0
+    },
+    "15": {
+      "seconds": 10,
+      "p50_ms": 16.0,
+      "p95_ms": 290.0
+    },
+    "16": {
+      "seconds": 3,
+      "p50_ms": 24.0,
+      "p95_ms": 330.0
+    }
+  }
 }

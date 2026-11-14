@@ -96,8 +96,29 @@ def analyse(run, peak_start, peak_end, price=0.0208):
     ax.plot(by.index, by["p95"], "o-", color="tab:red", label="p95 median")
     ax.plot(by.index, by["p50"], "s-", color="tab:green", label="p50 median")
     ax.set_xlabel("serving instances"); ax.set_ylabel("response time (ms)"); ax.set_yscale("log")
-    ax.set_title(f"{run}: response time vs instance count"); ax.legend()
+    ax.set_title(f"{run}: response time vs instance count (whole run)"); ax.legend()
     fig.tight_layout(); fig.savefig(os.path.join(d, "latency_vs_instances.png"), dpi=130); plt.close(fig)
+
+    # Peak-load only: offered load is (nearly) constant here, so latency differences come from the fleet size,
+    # not from the load changing. This is the clean version of the required plot.
+    pk = g[g["users"] >= 0.9 * g["users"].max()]
+    if len(pk):
+        by = pk.groupby("ready")[["p50", "p95", "p99"]].median()
+        n = pk.groupby("ready").size()
+        fig, ax = plt.subplots(figsize=(7.5, 4.8))
+        ax.scatter(pk["ready"], pk["p95"], alpha=.25, s=14, color="tab:red", label="p95 (per second)")
+        ax.plot(by.index, by["p95"], "o-", color="tab:red", label="p95 median")
+        ax.plot(by.index, by["p50"], "s-", color="tab:green", label="p50 median")
+        for k in by.index:
+            ax.annotate(f"n={n[k]}s", (k, by.loc[k, "p95"]), textcoords="offset points", xytext=(6, 8), fontsize=8)
+        ax.set_xlabel("serving (healthy) instances"); ax.set_ylabel("response time (ms)"); ax.set_yscale("log")
+        ax.set_xticks(sorted(by.index))
+        ax.set_title(f"{run}: response time vs instance count at peak load (~{int(pk['users'].max())} req/s)")
+        ax.legend(); fig.tight_layout()
+        fig.savefig(os.path.join(d, "latency_vs_instances_peak.png"), dpi=130); plt.close(fig)
+        summary["peak_by_instances"] = {int(k): {"seconds": int(n[k]), "p50_ms": float(by.loc[k, "p50"]),
+                                                  "p95_ms": float(by.loc[k, "p95"])} for k in by.index}
+        json.dump(summary, open(os.path.join(d, "summary.json"), "w"), indent=2)
     print(json.dumps(summary, indent=2))
 
 
