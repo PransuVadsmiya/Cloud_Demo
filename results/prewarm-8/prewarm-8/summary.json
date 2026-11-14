@@ -1,0 +1,46 @@
+{
+  "run": "prewarm-8",
+  "requests": 16838,
+  "failure_rate_pct": 0.137,
+  "overall_p50_ms": 46.0,
+  "overall_p95_ms": 410.0,
+  "overall_p99_ms": 550.0,
+  "peak_p50_ms": 50.0,
+  "peak_p95_ms": 380.0,
+  "peak_p95_worst_ms": 530.0,
+  "peak_rps": 202.7,
+  "max_instances": 20,
+  "avg_instances": 12.45,
+  "instance_seconds": 2278,
+  "cost_usd": 0.013165,
+  "orders_processed": 872,
+  "orders_left_in_queue": 0,
+  "order_p95_s": 0.025,
+  "peak_by_instances": {
+    "12": {
+      "seconds": 1,
+      "p50_ms": 210.0,
+      "p95_ms": 510.0
+    },
+    "15": {
+      "seconds": 9,
+      "p50_ms": 170.0,
+      "p95_ms": 520.0
+    },
+    "16": {
+      "seconds": 22,
+      "p50_ms": 47.0,
+      "p95_ms": 370.0
+    },
+    "17": {
+      "seconds": 2,
+      "p50_ms": 51.0,
+      "p95_ms": 375.0
+    },
+    "20": {
+      "seconds": 11,
+      "p50_ms": 150.0,
+      "p95_ms": 470.0
+    }
+  }
+}
