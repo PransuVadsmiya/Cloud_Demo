@@ -29,7 +29,7 @@ def main():
     ap.add_argument("--hold", type=int, default=600)
     ap.add_argument("--down", type=int, default=120)
     ap.add_argument("--tail", type=int, default=1200)
-    ap.add_argument("--price-per-hour", type=float, default=0.0208, help="USD/h of one instance (check the AWS price list)")
+    ap.add_argument("--price-per-hour", type=float, default=0.0224, help="USD/h of one t3.small in ap-south-1 (on-demand; verify on the AWS price list)")
     a = ap.parse_args()
     total = a.warm + a.ramp + a.hold + a.down + a.tail
     out = os.path.join(ROOT, "results", a.name)

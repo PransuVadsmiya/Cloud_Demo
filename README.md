@@ -149,3 +149,37 @@ Unlike the spike run, load and fleet size are both constant, so each point is a 
 Capacity (~30 req/s per instance for this mix) puts the knee at 5-6 instances: below it the fleet cannot serve the
 offered load (4 instances serve only 113 of 150 req/s) and latency explodes; above it, extra instances mainly cut
 queueing delay and head-of-line blocking, with diminishing returns. The p50 dip at 6 vs 8 is run-to-run noise.
+
+## AWS results (the faculty deliverable run)
+
+Stack: ALB + Auto Scaling Group (1 to 4 `t3.small`, ap-south-1), target tracking at 50% average CPU. Load: Locust, 16 req/s
+normal, ramp to 80 req/s (5x), hold 10 min, ramp down, 20 min tail (38 min total). The group started this run at 2 instances.
+
+| Metric | Value |
+|---|---|
+| Requests | 79,984 (Locust console total; `summary.json` shows 79,980 because the CSV is written slightly before the last responses) |
+| Failed | 1 (0.001%) |
+| Instances | 2 to 4 (cap = 8 vCPU account limit), back to 1 after the load dropped |
+| Average billed instances during the test | 3.31 |
+| Compute cost of the test window | USD 0.047 at USD 0.0224/h (about 7,493 instance-seconds); excludes the ALB and the time the stack existed before and after the test |
+| Peak window p95 (median of per-second values) / worst second | 590 ms / 3,100 ms |
+
+Response time at constant peak load (about 80 req/s), by number of healthy instances (from `latency_vs_instances_peak.png`):
+
+| Healthy instances | Seconds observed | p50 ms | p95 ms |
+|---|---|---|---|
+| 1 | 103 | 2000 | 2700 |
+| 2 | 196 | 180 | 940 |
+| 3 | 164 | 32 | 370 |
+| 4 | 170 | 29 | 230 |
+
+Notes: the 1-instance row is the overload moment when one of the two original instances dropped out of the load balancer (serving count fell
+from 2 to 1 while 4 were launched); seconds within a run are not independent samples, so treat differences as indicative, not statistically tested.
+A first attempt asked for 8 instances and AWS refused the extra four ("vCPU limit of 8"), so max size was set to 4 and the load was reduced.
+The cross-check: at 40 req/s on 2 instances (first attempt) CPU read about 49%, i.e. one t3.small saturates near 41 req/s, matching the 43 req/s measured locally.
+
+## Metric definitions
+
+* **peak p95 median / worst**: Locust's 10-second sliding-window p95, sampled every second inside the peak window; median and maximum of those samples.
+* **avg instances / cost**: billed instances (launched, including booting) integrated over the time the load test ran, times the assumed hourly price.
+* **Failed %**: HTTP 5xx from load shedding (503) and from instances being added/removed (502), over all requests.

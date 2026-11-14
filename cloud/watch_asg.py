@@ -57,7 +57,7 @@ def main():
     ap.add_argument("--out", default="results/aws/timeline.csv")
     ap.add_argument("--duration", type=int, default=3000)
     ap.add_argument("--interval", type=int, default=10)
-    ap.add_argument("--price-per-hour", type=float, default=0.0208)
+    ap.add_argument("--price-per-hour", type=float, default=0.0224)
     a = ap.parse_args()
 
     asg_c, elb_c, cw_c = (boto3.client(s, region_name=a.region) for s in ("autoscaling", "elbv2", "cloudwatch"))
