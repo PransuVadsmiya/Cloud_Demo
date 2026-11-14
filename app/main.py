@@ -11,12 +11,14 @@ Design choices mirror the Week-1 findings:
                                                       any laptop, independent of CPU count
 """
 import asyncio
+import hashlib
 import json
 import os
 import random
 import socket
 import time
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
 import redis.asyncio as aioredis
@@ -33,21 +35,81 @@ MAX_INFLIGHT = int(os.getenv("MAX_INFLIGHT", "40"))     # shed above this (waiti
 QUEUE_MAX = int(os.getenv("QUEUE_MAX", "20000"))        # order-queue backpressure
 START_DELAY_S = float(os.getenv("START_DELAY_S", "0"))  # simulated VM/container boot time
 FLASH_STOCK = int(os.getenv("FLASH_STOCK", "1000000"))
+WORK_MODE = os.getenv("WORK_MODE", "sleep")             # "sleep": simulated capacity; "cpu": real CPU burn
 N_SKUS = 5
 INSTANCE_ID = os.getenv("INSTANCE_ID") or uuid.uuid4().hex[:8]
 ADVERTISE = os.getenv("ADVERTISE_ADDR") or f"{socket.gethostbyname(socket.gethostname())}:{os.getenv('PORT', '8000')}"
 
 state = {"inflight": 0, "reqs": 0, "shed": 0, "busy_s": 0.0}
 slots = asyncio.Semaphore(CONCURRENCY)
-r: aioredis.Redis | None = None
+r = None   # redis client, or MemStore when REDIS_URL=memory (stateless single-instance mode, used on AWS)
+
+_BUF = os.urandom(64 * 1024)
+_POOL = ThreadPoolExecutor(max_workers=max(2, CONCURRENCY))
+
+
+def _burn(ms: float):
+    """Consume `ms` of real CPU time. Uses thread CPU time (not wall time), so under contention the request
+    takes longer instead of doing less work, exactly like an overloaded server. sha256 releases the GIL."""
+    end = time.thread_time() + ms / 1000.0
+    while time.thread_time() < end:
+        hashlib.sha256(_BUF).digest()
 
 
 async def work(ms: float):
     """Occupy one capacity slot for ~ms (queues if all slots are busy)."""
     async with slots:
         t0 = time.monotonic()
-        await asyncio.sleep(ms * random.uniform(0.8, 1.2) / 1000.0)
+        ms = ms * random.uniform(0.8, 1.2)
+        if WORK_MODE == "cpu":
+            await asyncio.get_running_loop().run_in_executor(_POOL, _burn, ms)
+        else:
+            await asyncio.sleep(ms / 1000.0)
         state["busy_s"] += time.monotonic() - t0
+
+
+class MemStore:
+    """Minimal in-process stand-in for the Redis calls this app makes (no shared state between instances)."""
+
+    def __init__(self):
+        self.kv, self.exp, self.lists = {}, {}, {}
+
+    async def get(self, k):
+        if k in self.exp and self.exp[k] < time.time():
+            self.kv.pop(k, None); self.exp.pop(k, None)
+        return self.kv.get(k)
+
+    async def set(self, k, v, ex=None):
+        self.kv[k] = v
+        if ex:
+            self.exp[k] = time.time() + ex
+
+    async def setnx(self, k, v):
+        self.kv.setdefault(k, v)
+
+    async def decrby(self, k, n):
+        self.kv[k] = int(self.kv.get(k, 0)) - n
+        return self.kv[k]
+
+    async def incrby(self, k, n):
+        self.kv[k] = int(self.kv.get(k, 0)) + n
+        return self.kv[k]
+
+    async def llen(self, k):
+        return len(self.lists.get(k, []))
+
+    async def rpush(self, k, v):
+        lst = self.lists.setdefault(k, [])
+        lst.append(v)
+        if len(lst) > 1000:          # nobody consumes the queue in memory mode: keep it bounded
+            del lst[:500]
+
+    async def delete(self, *k):
+        for x in k:
+            self.kv.pop(x, None)
+
+    async def aclose(self):
+        pass
 
 
 async def heartbeat():
@@ -70,7 +132,7 @@ async def heartbeat():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global r
-    r = aioredis.from_url(REDIS_URL, decode_responses=True)
+    r = MemStore() if REDIS_URL == "memory" else aioredis.from_url(REDIS_URL, decode_responses=True)
     for i in range(N_SKUS):
         await r.setnx(f"stock:sku-{i}", FLASH_STOCK)
     if START_DELAY_S:
@@ -106,6 +168,13 @@ async def shed_and_count(request: Request, call_next):
 @app.get("/health")
 async def health():
     return {"ok": True, "id": INSTANCE_ID}
+
+
+@app.get("/")
+@app.get("/status")
+async def status():
+    """Simple response for the 'live URL' deliverable; also shows which instance served it."""
+    return {"status": "Big Billion Days deal available", "instance": INSTANCE_ID}
 
 
 @app.get("/api/products")

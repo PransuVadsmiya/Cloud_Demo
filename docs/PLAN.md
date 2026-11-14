@@ -9,6 +9,7 @@
 | S4 | BBD-shaped load test (Locust primary, k6 alternative) | `loadtest/` | Locust tested; k6 untested |
 | S5 | Experiment runner, plots, comparison | `experiments/` | done |
 | S6 | Kubernetes manifests + K8s autoscaler backend, to mirror Flipkart's K8s platform [4] | `k8s/`, `autoscaler/` | written; plumbing tested with a fake kubectl, not yet on a real cluster |
+| S6b | AWS deployment per faculty brief: ALB + ASG (50% CPU) + CloudWatch dashboard + test runner | `cloud/` | written; HCL syntax and AWS API calls checked offline; not applied to a real account yet |
 | S7 | Report add-ons: results, figures, discussion, viva notes | report | to do |
 
 ## Scenarios and the question each answers

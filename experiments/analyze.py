@@ -23,7 +23,8 @@ def load(run):
     h["ts"] = h["Timestamp"].astype(float)
     tl = pd.read_csv(os.path.join(d, "timeline.csv"))
     h = h.sort_values("ts")
-    m = pd.merge_asof(h, tl.sort_values("ts"), on="ts", direction="nearest", tolerance=2.0)
+    tol = max(2.0, 1.5 * float(tl["ts"].diff().median() or 1.0))   # cloud timelines are sampled every ~10 s
+    m = pd.merge_asof(h, tl.sort_values("ts"), on="ts", direction="nearest", tolerance=tol)
     m["t"] = m["ts"] - m["ts"].min()
     m = m.rename(columns={"50%": "p50", "95%": "p95", "99%": "p99", "Requests/s": "rps", "Failures/s": "fail_rps",
                           "User Count": "users"})

@@ -22,12 +22,19 @@ plot response time against instance count.
 
 Only discussed, not replicated: own data centres, the hybrid migration, Aerospike-scale infrastructure.
 
+## AWS deployment (what the faculty asked for)
+
+The faculty brief for Theme 1 asks for a real cloud deployment: live load-balancer URL, Auto Scaling Group screenshots and a response-time-vs-instances plot,
+with a rule "add an instance when CPU > 50%". That is `cloud/` (Terraform for ALB + ASG + CloudWatch dashboard, plus the test runner); see `cloud/README.md`.
+The local, Docker and Kubernetes modes below are the experiment framework used to compare scaling strategies.
+
 ## Layout
 
 ```
 app/            FastAPI storefront (main.py) + order worker (worker.py)
 lb/             nginx.conf (Docker) and lb.py (dev-mode software LB)
 k8s/            Kubernetes manifests (kind) - Deployments, Service/LB, readiness probes
+cloud/          AWS deployment: Terraform (ALB, ASG at 50% CPU, dashboard), watcher, test runner
 autoscaler/     control loop, process and docker backends, cost accounting
 loadtest/       locustfile.py (primary), k6_spike.js (alternative)
 experiments/    run_experiment.py, run_all.sh, analyze.py
