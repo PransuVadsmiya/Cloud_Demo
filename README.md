@@ -89,11 +89,11 @@ so expect to adjust it on first run.
 |---|---|---|---|---|
 | static-low (4) | 13.2 | 1900 / 3200 | 4.0 | 0.0044 |
 | static-peak (12) | 0.12 | 560 / 750 | 12.0 | 0.0133 |
-| reactive | 0.28 | 330 / 1200 | 9.3 | 0.0104 |
-| prewarm | 0.17 | 485 / 670 | 11.1 | 0.0123 |
+| reactive | 0.28 | 330 / 1200 | 9.6 | 0.0106 |
+| prewarm | 0.17 | 485 / 670 | 11.4 | 0.0126 |
 
 Reading: sizing for normal traffic fails under a 5x spike; sizing for the peak works but is the most expensive;
-reactive autoscaling is ~22% cheaper than static-peak here but its worst-case latency (1.2 s) occurs during the
+reactive autoscaling is ~20% cheaper than static-peak here but its worst-case latency (1.2 s) occurs during the
 ramp while new instances boot; pre-warming trades some cost for the lowest worst-case latency among the scaling
 options. Failures are fast 503 responses from load shedding, so percentiles for `static-low` are not comparable to the others.
 The cost gap would be far larger on a real day, because a 2-minute run spends a third of its time at peak.

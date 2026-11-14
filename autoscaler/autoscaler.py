@@ -128,6 +128,7 @@ def main():
     os.makedirs(os.path.dirname(a.timeline) or ".", exist_ok=True)
     be.scale_to(a.initial)
     desired, t0, cost, tick = a.initial, time.time(), 0.0, 0
+    prev = t0
     last_in = t0   # scale-in cooldown starts at launch: no scale-in before traffic arrives
     window = []   # per-second pressure samples since the last decision (smooths cold-start bursts)
     last_done = int(r.get("orders:done") or 0)
@@ -144,7 +145,8 @@ def main():
                 fleet = read_fleet(r)
                 ready = len(fleet)
                 launched = be.count()
-                cost += launched * a.price_per_hour / 3600.0
+                cost += launched * a.price_per_hour / 3600.0 * (now - prev)   # real elapsed time (docker calls make ticks >1s)
+                prev = now
                 avg_util = sum(i["util"] for i in fleet) / ready if ready else 0.0
                 avg_inflight = sum(i["inflight"] for i in fleet) / ready if ready else 0.0
                 # pressure: busy-time fraction, or queueing depth per slot when saturated

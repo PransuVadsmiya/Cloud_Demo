@@ -32,7 +32,7 @@ def load(run):
     return d, m, tl
 
 
-def analyse(run, peak_start, peak_end):
+def analyse(run, peak_start, peak_end, price=0.0208):
     d, m, tl = load(run)
     st = pd.read_csv(os.path.join(d, "locust_stats.csv"))
     agg = st[st["Name"] == "Aggregated"].iloc[0]
@@ -42,6 +42,12 @@ def analyse(run, peak_start, peak_end):
     op = os.path.join(d, "orders.txt")
     if os.path.exists(op):
         orders = dict(line.strip().split("=") for line in open(op) if "=" in line)
+    # time-weighted: rows can be >1 s apart (docker calls are slow), so weight by real elapsed time
+    dt = tl["t"].diff().shift(-1).fillna(1.0).clip(lower=0)
+    inst_s = float((tl["launched"] * dt).sum())
+    span = float(tl["t"].iloc[-1] - tl["t"].iloc[0]) + 1.0
+    if "done" not in orders:   # docker mode: no orders.txt, use the autoscaler's last reading
+        orders = {"done": int(tl["orders_done"].iloc[-1]), "left": int(tl["queue_len"].iloc[-1])}
     summary = {
         "run": run,
         "requests": n_req,
@@ -52,9 +58,9 @@ def analyse(run, peak_start, peak_end):
         "peak_p95_worst_ms": round(float(peak["p95"].max()), 1),
         "peak_rps": round(float(peak["rps"].max()), 1),
         "max_instances": int(tl["launched"].max()),
-        "avg_instances": round(float(tl["launched"].mean()), 2),
-        "instance_seconds": int(tl["launched"].sum()),
-        "cost_usd": float(tl["cost_usd"].iloc[-1]),
+        "avg_instances": round(inst_s / span, 2),
+        "instance_seconds": int(inst_s),
+        "cost_usd": round(inst_s * price / 3600.0, 6),
         "orders_processed": int(orders.get("done", 0)), "orders_left_in_queue": int(orders.get("left", 0)),
         "order_p95_s": float(orders["order_p95_s"]) if "order_p95_s" in orders else None,
     }
@@ -109,8 +115,9 @@ if __name__ == "__main__":
     ap.add_argument("--peak-start", type=float, default=40)
     ap.add_argument("--peak-end", type=float, default=80)
     ap.add_argument("--compare", nargs="+")
+    ap.add_argument("--price-per-hour", type=float, default=0.0208)
     a = ap.parse_args()
     if a.compare:
         compare(a.compare)
     else:
-        analyse(a.run, a.peak_start, a.peak_end)
+        analyse(a.run, a.peak_start, a.peak_end, a.price_per_hour)
