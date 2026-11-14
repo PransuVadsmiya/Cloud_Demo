@@ -36,6 +36,12 @@ def analyse(run, peak_start, peak_end, price=0.0208):
     d, m, tl = load(run)
     st = pd.read_csv(os.path.join(d, "locust_stats.csv"))
     agg = st[st["Name"] == "Aggregated"].iloc[0]
+    # only count the window in which the load test ran; warn if the autoscaler timeline does not cover it
+    lo, hi = m["ts"].min(), m["ts"].max()
+    if tl["ts"].min() > lo + 3 or tl["ts"].max() < hi - 3:
+        print(f"WARNING: autoscaler timeline ({tl['ts'].min()-lo:+.0f}s .. {tl['ts'].max()-lo:+.0f}s) does not "
+              f"cover the load test (0 .. {hi-lo:.0f}s); cost/instances are partial. Use run_docker.py.")
+    tl = tl[(tl["ts"] >= lo - 1) & (tl["ts"] <= hi + 1)].reset_index(drop=True)
     peak = m[(m["t"] >= peak_start) & (m["t"] <= peak_end)]
     n_req, n_fail = int(agg["Request Count"]), int(agg["Failure Count"])
     orders = {}

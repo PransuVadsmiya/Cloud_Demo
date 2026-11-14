@@ -60,15 +60,11 @@ the peak all day), `reactive` (autoscaler only), `prewarm` (scheduled floor + au
 
 ```bash
 docker compose up -d --build                       # redis, 2 app replicas, 2 workers, nginx on :8080
-python autoscaler/autoscaler.py --backend docker --mode reactive --redis redis://localhost:6379/0 \
-       --timeline results/docker/timeline.csv
-BASE_RPS=40 locust -f loadtest/locustfile.py --headless --host http://localhost:8080 \
-       --csv results/docker/locust --csv-full-history
-python experiments/analyze.py --run docker
+python experiments/run_docker.py --name docker-reactive --mode reactive   # autoscaler + load test + analysis
 ```
 
-Docker mode has not been exercised yet in the environment where this was written (no Docker daemon),
-so expect to adjust it on first run.
+Docker mode was first run on Windows with Docker Desktop (the stack came up and the autoscaler scaled 2 to 20 containers);
+it was not testable in the sandbox where the code was written.
 
 ## Outputs for the report
 

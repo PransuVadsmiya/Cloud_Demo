@@ -10,9 +10,9 @@
   "peak_p95_worst_ms": 1200.0,
   "peak_rps": 212.0,
   "max_instances": 20,
-  "avg_instances": 9.55,
-  "instance_seconds": 1834,
-  "cost_usd": 0.010596,
+  "avg_instances": 9.8,
+  "instance_seconds": 1784,
+  "cost_usd": 0.010308,
   "orders_processed": 873,
   "orders_left_in_queue": 0,
   "order_p95_s": 0.0196

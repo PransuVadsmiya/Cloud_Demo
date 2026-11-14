@@ -11,8 +11,8 @@
   "peak_rps": 163.2,
   "max_instances": 4,
   "avg_instances": 4.0,
-  "instance_seconds": 768,
-  "cost_usd": 0.004437,
+  "instance_seconds": 732,
+  "cost_usd": 0.004229,
   "orders_processed": 558,
   "orders_left_in_queue": 0,
   "order_p95_s": 0.0161
